@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+
+        }
+
+        .upload-container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 250px;
+        }
+        .upload-result {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 300px; /* 设置一个固定高度以便更好地展示比例 */
+        }
+        .upload-result img {
+            width: 100%;
+            
+            height: 50%;
+            object-fit: contain;
+        }
+        .upload-result h3
+        .upload-result button,
+        .upload-result p {
+            width: 100%;
+            height: 8%;
+            line-height: 8%;
+            margin-top: 4%;
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        img[id="upload-result"]{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="upload-container"id = "upload-container" >
+        <h1>图片上传</h1>
+        <input type="file" id="image-upload"  accept="image/*">
+        <button onclick="uploadImage()">上传</button>
+    </div>
+    <div class="upload-result" id = "upload-result" style="display: none;">
+        <h3>上传结果</h1>
+        <img src="" alt="Uploaded Image">
+        <p>Uploaded successfully!</p>
+        <button onclick="uploadImage()">重新上传</button>
+    </div>
+    
+    <script src="./static/js/upload.js"></script>
+</body>
+</html>
+
+
+
+

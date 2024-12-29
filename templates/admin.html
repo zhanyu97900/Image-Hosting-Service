@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .item {
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  height: 120px; /* 设置 li 高度 */
+  border: 1px solid #ccc; /* 可选：添加边框以便可视化 */
+}
+
+.item-image {
+  width: 30%; /* 图片宽度占30% */
+  max-height: 100px; /* 最大宽度为100px */
+  width: auto; /* 自适应高度 */
+  margin-right: 5%; /* 给图片右边留一些间距 */
+}
+
+.item-name {
+  flex-grow: 1; /* 名字占据剩余空间的40% */
+  min-width: 40%; /* 确保名字至少占40% */
+  text-overflow: ellipsis; /* 当内容超出时显示省略号 */
+  white-space: nowrap; /* 不换行 */
+  overflow: hidden; /* 超出部分隐藏 */
+  margin-right: 5%; /* 给名字右边留一些间距 */
+}
+
+  .custom-button {
+    flex-basis: 3%;
+    margin-left: 5px; 
+    padding: 10px 20px;
+    background-color: #401486;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+    </style>
+</head>
+<body>
+ 
+    <h1>图片管理</h1>
+    <div class="gallery" id="gallery">
+
+        <ul id = "item">
+            <li class="item">
+              <img src="https://via.placeholder.com/100" alt="Placeholder Image" class="item-image">
+              <span class="item-name">这是一个很长的名字，应该被截断并显示省略号...</span>
+              <a href="#" class="custom-button">查看</a>
+              <a href="#" class="custom-button">删除</a>
+              
+            </li>
+            <!-- 更多 li 元素 -->
+          </ul>
+    </div>
+
+    <script src="./static/js/allfile.js"></script>
+</body>
+</html>
+
+
+
