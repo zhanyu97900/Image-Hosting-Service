@@ -3,6 +3,7 @@ package sql
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"images/logutil"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -10,29 +11,77 @@ import (
 
 var DB *sql.DB
 
+func tableExists(db *sql.DB, tableName string) (bool, error) {
+	var count int
+	// 查询sqlite的系统表sqlite_master来判断表是否存在
+	query := fmt.Sprintf("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='%s'", tableName)
+	err := db.QueryRow(query).Scan(&count)
+	if err != nil {
+		return false, err
+	}
+	return count > 0, nil
+}
 func Init() {
-	logutil.Info("数据库开始链接")
+	init_image()
+	init_token()
+}
+
+func init_image() {
+	logutil.Info("images数据库开始链接")
 	var err error
 	DB, err = sql.Open("sqlite3", "./sql/db.images")
 	if err != nil {
-		logutil.Fatal("数据库链接失败: %v", err)
+		logutil.Fatal("images数据库链接失败: %v", err)
 	}
 
 	// 检查连接是否成功
 	err = DB.Ping()
 	if err != nil {
-		logutil.Fatal("数据库链接失败: %v", err)
+		logutil.Fatal("images数据库链接失败: %v", err)
 	}
-	logutil.Info("数据库链接成功")
+	// 确定表存在吗
+	prepare_name := "prepare"
+	images_name := "images"
+	exists_prepare, err_prepare := tableExists(DB, prepare_name)
+	if err_prepare != nil {
+		logutil.Fatal("images数据库确定表报错: %v", err_prepare)
+	}
+	if !exists_prepare {
+		createQuery := `CREATE TABLE prepare (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,fileid TEXT NOT NULL,timestamp INTEGER NOT NULL,upload INTEGER DEFAULT 0 CHECK (upload IN (0, 1)));`
+		_, err := DB.Exec(createQuery)
+		if err != nil {
+			logutil.Fatal("images数据库prepare表创建失败: %v", err)
+		} else {
+			logutil.Info("images数据库prepare表创建成功")
+		}
+	}
+	exists_images, err_images := tableExists(DB, images_name)
+	if err_images != nil {
+		logutil.Fatal("images数据库确定表报错: %v", err_images)
+	}
+	if !exists_images {
+		createQuery := `CREATE TABLE images (id INTEGER PRIMARY KEY AUTOINCREMENT,fileid TEXT NOT NULL UNIQUE, name TEXT NOT NULL,sha256 TEXT NOT NULL,path TEXT NOT NULL,removed INTEGER DEFAULT 0 CHECK (removed IN (0, 1)));`
+		_, err := DB.Exec(createQuery)
+		if err != nil {
+			logutil.Fatal("images数据库images表创建失败: %v", err)
+		} else {
+			logutil.Info("images数据库images表创建成功")
+		}
+	}
+	logutil.Info("images数据库链接成功")
 }
 
-func Close() {
-	logutil.Info("开始关闭数据库链接")
+func close_image() {
+	logutil.Info("开始关闭images数据库链接")
 	err := DB.Close()
 	if err != nil {
-		logutil.Fatal("数据库关闭失败")
+		logutil.Fatal("images数据库关闭失败")
 	}
-	logutil.Info("数据库关闭成功")
+	logutil.Info("images数据库关闭成功")
+}
+func Close() {
+	close_image()
+	close_token()
 }
 
 type Image struct {

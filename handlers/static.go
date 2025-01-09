@@ -20,3 +20,11 @@ func Admin(c *gin.Context) {
 func NotFound(c *gin.Context) {
 	c.HTML(http.StatusNotFound, "404.html", nil)
 }
+
+func LoginPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "login.html", nil)
+}
+
+func RegisterPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "register.html", nil)
+}

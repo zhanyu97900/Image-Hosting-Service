@@ -1,4 +1,4 @@
-## sql
+## sql_images
 ### 表 images
     1. fileid 唯一
     2. id 
@@ -21,6 +21,40 @@
     筛选 removed 不为0
 ### 方法 查询通过sha256
     筛选 sha256 相同的
+## sql_token
+### user
+    id 主键
+    username 唯一
+    password 不唯一 hash一下
+    userid
+### token
+    token 
+    refresh 
+    userid 外键
+### 生成userid
+    返回 userid
+### 检查 userid 和username 
+    返回 bool 和错误
+### 查询token
+    传入 userid
+    返回TOKEN 和error
+### 更新token
+    传入 TOKEN
+    返回一个 TOKEN，error
+### 查询user
+    传入username
+    返回一个 USER 和 error
+### 插入 user token
+    传入 USER TOKEN
+    返回 bool，error
+### 加密password
+    加密password
+    返回 字符串,error
+### 验证password
+    传入 服务器所存密码，和password
+    返回bool
+### 生成token
+    
 ## 文件
 ### 上传
 ### fileid
@@ -64,3 +98,16 @@
     get
     返回 0 1
 
+## 登录
+### 响应login.html
+### 响应Register.html
+### api
+    1.登录
+        /api/login
+        post username password
+        返回 0 1
+    2.注册
+        /api/register
+        post username password
+        返回 0 1
+        
